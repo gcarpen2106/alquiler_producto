@@ -1,3 +1,5 @@
+# models/alquiler_producto.py
+
 from odoo import models, fields, api
 from datetime import datetime, timedelta
 
@@ -31,6 +33,18 @@ class AlquilerProducto(models.Model):
         for record in self:
             if record.fecha_inicio:
                 record.fecha_fin = record.fecha_inicio + timedelta(days=30)
+
+    @api.depends('producto_id')
+    def _compute_producto_disponible(self):
+        for record in self:
+            if record.producto_id:
+                cantidad_disponible = self.env['stock.quant'].search([
+                    ('product_id', '=', record.producto_id.id),
+                    ('location_id.usage', '=', 'internal')
+                ]).mapped('quantity')
+                record.producto_disponible = sum(cantidad_disponible) > 0
+            else:
+                record.producto_disponible = False
 
     @api.onchange('producto_id')
     def _onchange_producto_id(self):
