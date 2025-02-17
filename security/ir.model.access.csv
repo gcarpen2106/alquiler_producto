@@ -1,4 +1,3 @@
-# security/ir.model.access.csv
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_alquiler_producto_user,alquiler.producto.user,model_alquiler_producto,base.group_user,1,0,0,0
 access_alquiler_producto_manager,alquiler.producto.manager,model_alquiler_producto,base.group_sale_manager,1,1,1,1
