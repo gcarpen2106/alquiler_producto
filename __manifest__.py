@@ -7,11 +7,11 @@
     'summary': 'Gestión de alquiler de productos',
     'description': 'Gestión de préstamos de productos en alquiler para clientes',
     'author': 'Gonzalo Carretero',
-    'depends': ['base', 'sale', 'stock'],
+    'depends': ['base', 'product', 'sale'],
     'data': [
         'security/ir.model.access.csv',
-        'models/rental.xml',
-        'views/alquiler_producto_views.xml'
+        'views/alquiler_producto_views.xml',
+        'models/rental.xml'
     ],
     'icon': '/alquiler_producto/static/description/icon56.png',
     'installable': True,
