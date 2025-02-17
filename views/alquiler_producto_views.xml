@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista Arbol -->
+    <record id="view_alquiler_producto_tree" model="ir.ui.view">
+        <field name="name">alquiler.producto.tree</field>
+        <field name="model">alquiler.producto</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="cliente_id"/>
+                <field name="producto_id"/>
+                <field name="fecha_inicio"/>
+                <field name="fecha_fin"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista Formulario -->
+    <record id="view_alquiler_producto_form" model="ir.ui.view">
+        <field name="name">alquiler.producto.form</field>
+        <field name="model">alquiler.producto</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="cliente_id"/>
+                            <field name="producto_id"/>
+                            <field name="producto_disponible" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="fecha_inicio"/>
+                            <field name="fecha_fin"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Observaciones">
+                            <field name="observaciones"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista Busqueda -->
+    <record id="view_alquiler_producto_search" model="ir.ui.view">
+        <field name="name">alquiler.producto.search</field>
+        <field name="model">alquiler.producto</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="cliente_id"/>
+                <field name="producto_id"/>
+                <filter string="En Alquiler" name="en_alquiler" domain="[('state','=','en_alquiler')]"/>
+                <filter string="Entregado" name="entregado" domain="[('state','=','entregado')]"/>
+                <filter string="No Entregado" name="no_entregado" domain="[('state','=','no_entregado')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Cliente" name="group_by_cliente" context="{'group_by':'cliente_id'}"/>
+                    <filter string="Estado" name="group_by_state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acciones -->
+    <record id="action_alquiler_producto" model="ir.actions.act_window">
+        <field name="name">Alquiler de Productos</field>
+        <field name="res_model">alquiler.producto</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_alquiler_producto_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear nuevo alquiler de producto
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem id="menu_alquiler_producto_root"
+              name="Alquiler de Productos"
+              sequence="10"/>
+
+    <menuitem id="menu_alquiler_producto"
+              name="Alquileres"
+              parent="menu_alquiler_producto_root"
+              action="action_alquiler_producto"
+              sequence="10"/>
+</odoo>
